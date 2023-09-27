@@ -1,12 +1,16 @@
 import os
 import json
-import github_conn
-import requests
+from sync import Scripts
+from conn import SourceApp
 from subprocess import call
 
 def main():
-    e = call("pwd", shell=True)
-    print(e)
+    script = Scripts("OpenCompile", "BuildScripts")
 
+    if os.path.isfile("config/src.json"):
+        pass
+    else:
+        print("Creating Source list...")
+        
 if __name__ == "__main__":
     main()
