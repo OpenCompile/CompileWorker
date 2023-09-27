@@ -5,12 +5,12 @@ from conn import SourceApp
 from subprocess import call
 
 def main():
-    script = Scripts("OpenCompile", "BuildScripts")
+    s = Scripts("OpenCompile", "BuildScripts")
 
-    if os.path.isfile("config/src.json"):
+    if os.path.exists("BuildScripts"):
         pass
     else:
-        print("Creating Source list...")
+        call(f"git clone https://github.com/{s.owner}/{s.repo}.git", shell=True)
         
 if __name__ == "__main__":
     main()
