@@ -9,8 +9,5 @@ install-deb:
 	python3-pip libssl-dev libboost-all-dev \
 	git
 
-clean:
-	rm -rf BuildScripts
-
-
-
+reinit:
+	python3 src/reinit.py
