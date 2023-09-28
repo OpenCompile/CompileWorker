@@ -13,6 +13,11 @@ class SourceApp:
 
         f = open(f"BuildScripts/{repo}/version", "r").read()
         if f != response:
+            call(f"rm BuildScripts/{repo}/version", shell=True)
+
+            o = open(f"BuildScripts/{repo}/version", "w")
+            o.write(response)
+            o.close()
             self.build(repo)
     
     def sync_repo(self, repo):

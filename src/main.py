@@ -1,11 +1,12 @@
 import os
 import json
-from srcmanage import SourceApp
 from subprocess import call
-from sync import Scripts
+from srcmanage import SourceApp
 
 def main():
-    s = Scripts("OpenCompile", "BuildScripts")
+
+    sowner = "OpenCompile"
+    srepo = "BuildScripts"
 
     if os.path.exists("BuildScripts"):
         l = json.loads(open("BuildScripts/list.json", "r").read())
@@ -15,7 +16,7 @@ def main():
         i2pd.repo_exists(i2pd.repo)
         i2pd.checkver(i2pd.repo)
     else:
-        call(f"git clone https://github.com/{s.owner}/{s.repo}.git", shell=True)
+        call(f"git clone https://github.com/{sowner}/{srepo}.git", shell=True)
         
 if __name__ == "__main__":
     main()
