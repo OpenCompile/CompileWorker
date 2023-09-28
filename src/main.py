@@ -12,6 +12,7 @@ def main():
 
         # I2Pd
         i2pd = SourceApp(l["i2pd"])
+        i2pd.repo_exists(i2pd.repo)
         i2pd.checkver(i2pd.repo)
     else:
         call(f"git clone https://github.com/{s.owner}/{s.repo}.git", shell=True)

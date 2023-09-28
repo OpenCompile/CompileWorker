@@ -14,8 +14,15 @@ class SourceApp:
         f = open(f"BuildScripts/{repo}/version", "r").read()
         if f != response:
             self.build(repo)
+    
     def sync_repo(self, repo):
         try:
-            call(f"git clone https://github.com/{repo}/git", shell=True)
+            call(f"git clone https://github.com/{repo}.git Repos/{repo}", shell=True)
         except:
             raise SystemError("Something bad happened...")
+    
+    def repo_exists(self, repo):
+        if os.path.exists(f"Repos/{repo}"):
+            pass
+        else:
+            self.sync_repo(repo)
