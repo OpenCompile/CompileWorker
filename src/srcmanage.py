@@ -36,4 +36,4 @@ class SourceApp:
             self.sync_repo(repo)
 
     def package(self, repo):
-        call(f"bash BuildScripts/{repo}/package.sh", shell=True)
+        call(f"bash BuildScripts/{repo}/package.sh {self.response}", shell=True)
