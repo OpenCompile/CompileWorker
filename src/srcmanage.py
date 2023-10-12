@@ -20,8 +20,8 @@ class SourceApp:
             o.write(self.response)
             o.close()
             self.build(repo)
-            call("pwd", shell=True)
-            self.package(repo)
+            if os.path.exists(f"Build/{repo}/package.sh"):
+                self.package(repo)
     
     def sync_repo(self, repo):
         try:
