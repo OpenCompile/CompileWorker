@@ -1,0 +1,21 @@
+--- Repos/PurpleI2P/i2pd/debian/control	2023-10-12 17:15:36.498867066 +0000
++++ Repos/PurpleI2P/i2pd/debian/controlp	2023-10-12 17:36:21.030910859 +0000
+@@ -1,8 +1,8 @@
+ Source: i2pd
+ Section: net
+ Priority: optional
+-Maintainer: r4sas <r4sas@i2pmail.org>
+-Build-Depends: debhelper (>= 12~), libboost-system-dev (>= 1.46), libboost-date-time-dev (>= 1.46), libboost-filesystem-dev (>= 1.46), libboost-program-options-dev (>= 1.46), libminiupnpc-dev, libssl-dev, zlib1g-dev
++Maintainer: Daniel Hejduk <jellymail@protonmail.com>
++Build-Depends: debhelper-compat (= 13), libboost-system-dev (>= 1.46), libboost-date-time-dev (>= 1.46), libboost-filesystem-dev (>= 1.46), libboost-program-options-dev (>= 1.46), libminiupnpc-dev, libssl-dev, zlib1g-dev, cmake, libwebsocketpp-dev, dh-apparmor
+ Standards-Version: 4.3.0
+ Homepage: http://i2pd.website/
+ Vcs-Git: git://github.com/PurpleI2P/i2pd.git
+@@ -15,4 +15,4 @@
+ Description: Full-featured C++ implementation of I2P client.
+  I2P (Invisible Internet Protocol) is a universal anonymous network layer. All
+  communications over I2P are anonymous and end-to-end encrypted, participants
+- don't reveal their real IP addresses.
+\ No newline at end of file
++ don't reveal their real IP addresses.
+
