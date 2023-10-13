@@ -1,10 +1,10 @@
 from srcmanage import SourceApp
 from subprocess import call
-
+import requests
 
 """
     I2PD
     building script
 """
-call(f"bash BuildScripts/PurpleI2P/i2pd/build.sh", shell=True)
-call(f"patch Repos/PurpleI2P/i2pd/debian/control < control.patch", shell=True)
+response = requests.get(f"https://api.github.com/repos/PurpleI2P/i2pd/releases/latest")
+call(f"BuildScripts/PurpleI2P/i2pd/build.sh", shell=True)
