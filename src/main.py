@@ -11,10 +11,10 @@ def main():
     if os.path.exists("BuildScripts"):
         l = json.loads(open("BuildScripts/list.json", "r").read())
 
-        # I2Pd
-        i2pd = SourceApp(l["i2pd"])
-        i2pd.repo_exists(i2pd.repo)
-        i2pd.checkver(i2pd.repo)
+        # xmrig
+        xmrig = SourceApp(l["xmrig"])
+        xmrig.repo_exists(xmrig.repo)
+        xmrig.checkver(xmrig.repo)
     else:
         call(f"git clone https://github.com/{sowner}/{srepo}.git", shell=True)
         
