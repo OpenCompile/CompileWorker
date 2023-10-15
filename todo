@@ -1,2 +1,0 @@
-Pre-Depends: init-system-helpers (>= 1.54~), adduser
-Depends: libboost-filesystem1.74.0 (>= 1.74.0), libboost-program-options1.74.0 (>= 1.74.0), libc6 (>= 2.34), libgcc-s1 (>= 3.0), libminiupnpc17 (>= 1.9.20140610), libssl3 (>= 3.0.0), libstdc++6 (>= 12), zlib1g (>= 1:1.1.4)
