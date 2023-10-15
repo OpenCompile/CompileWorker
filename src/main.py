@@ -17,6 +17,8 @@ def main():
         xmrig.checkver(xmrig.repo)
     else:
         call(f"git clone https://github.com/{sowner}/{srepo}.git", shell=True)
+        call("git clone git@github.com:openssl/openssl.git Repos/openssl", shell=True)
+        call("bash src/buildssl.sh", shell=True)
         
 if __name__ == "__main__":
     main()
