@@ -6,13 +6,10 @@ branches:
 
   - main
 
-init:
-
-- sh: make install-deb
-
 install:
 
-- sh: make
+- sh: make install-deb
+- sh: make init
 
 build_script:
 
