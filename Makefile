@@ -1,8 +1,8 @@
 all:
-	@python3 src/main.py
+	python3 src/main.py
 
-setup:
-	pip3 install -r requirements.txt
+init:
+	python3 src/init.py
 
 install-deb:
 	sudo apt update
