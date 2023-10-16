@@ -1,0 +1,19 @@
+version: 1.0.{build}
+
+branches:
+
+  only:
+
+  - main
+
+init:
+
+- sh: make install-deb
+
+install:
+
+- sh: make
+
+build_script:
+
+- sh: make
