@@ -18,9 +18,7 @@ def main():
         call(f"cp Repos/xmrig/xmrig/build/xmrig.tar.gz TarRepo/xmrig/xmrig/xmrig{xmrig.response}.tar.gz", shell=True)
         call(f"sha256sum TarRepo/xmrig/xmrig/xmrig{xmrig.response}.tar.gz >> TarRepo/xmrig/xmrig/SHA256SUMS.txt", shell=True)
     else:
-        call(f"git clone https://github.com/{sowner}/{srepo}.git", shell=True)
-        call("git clone git@github.com:openssl/openssl.git Repos/openssl", shell=True)
-        call("bash src/buildssl.sh", shell=True)
-        
+       print("First run 'make init'")
+       exit()
 if __name__ == "__main__":
     main()
