@@ -17,6 +17,7 @@ def main():
         xmrig.checkver(xmrig.repo)
         call(f"cp Repos/xmrig/xmrig/build/xmrig.tar.gz TarRepo/xmrig/xmrig/xmrig{xmrig.response}.tar.gz", shell=True)
         call(f"sha256sum TarRepo/xmrig/xmrig/xmrig{xmrig.response}.tar.gz >> TarRepo/xmrig/xmrig/SHA256SUMS.txt", shell=True)
+        call(f'cd TarRepo && git add . && git commit -m "Updating xmrig to {xmrig.response}" && git push origin main', shell=True)
     else:
        print("First run 'make init'")
        exit()
