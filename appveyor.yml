@@ -3,8 +3,8 @@ version: 1.0.{build}
 install:
 
 - sh: make install-deb
-- sh: make init
+- sh: python3 src/init.py
 
 build_script:
 
-- sh: make
+- sh: python3 src/main.py
