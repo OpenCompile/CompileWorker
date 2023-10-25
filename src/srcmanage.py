@@ -1,6 +1,7 @@
 from subprocess import call
 import os
 import requests
+from git import Repo
 
 class SourceApp:
     def __init__(self, repo):
@@ -9,10 +10,9 @@ class SourceApp:
         call(f"export PKGVER={self.response}", shell=True)
         call(f"bash BuildScripts/{repo}/build.sh", shell=True)
     def checkver(self, repo):
-        self.response = requests.get(f"https://api.github.com/repos/{repo}/releases/latest")
-        self.response = self.response.json()["name"]
 
         f = open(f"BuildScripts/{repo}/version", "r").read()
+        self.response = f # TODO
         if f != self.response:
             call(f"rm BuildScripts/{repo}/version", shell=True)
 
@@ -25,7 +25,8 @@ class SourceApp:
     
     def sync_repo(self, repo):
         try:
-            call(f"git clone https://github.com/{repo}.git Repos/{repo}", shell=True)
+            #call(f"git clone https://github.com/{repo}.git Repos/{repo}", shell=True)
+            Repo.clone_from(f"https://github.com/{repo}.git", f"Repos/{repo}")
         except:
             raise SystemError("Something bad happened...")
     
