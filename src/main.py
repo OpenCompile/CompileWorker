@@ -24,7 +24,7 @@ def main():
         call(f"mkdir -p TarRepo/xmrig/xmrig/{response}/", shell=True)
         call(f"cp Repos/xmrig/xmrig/build/xmrig TarRepo/xmrig/xmrig/{response}/xmrig && pwd && cd TarRepo/xmrig/xmrig/{response} && sha256sum xmrig > SHA256SUMS.txt && cd ../../../", shell=True)
         repo = Repo("TarRepo")
-        repo.index.add([f"TarRepo/xmrig/xmrig/{response}/SHA256SUMS.txt", f"TarRepo/xmrig/xmrig/{response}/xmrig"])
+        repo.index.add('**')
         repo.index.commit(f"Updating xmrig to {response}")
         repo.remotes.origin.push()
         call(f"rm -rf TarRepo/tmp", shell=True)
