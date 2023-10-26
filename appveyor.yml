@@ -3,8 +3,9 @@ image: Ubuntu
 install:
 
 - sh: make install-deb
+- sh: pip3 install -r requirements.txt
 - sh: python3 src/init.py
 
-build_script:
+#build_script:
 
-- sh: python3 src/main.py
+#- sh: python3 src/init.py
