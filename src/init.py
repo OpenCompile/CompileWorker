@@ -10,7 +10,7 @@ except:
     print("Somthing happed skipping..")
 #call("git clone git@github.com:openssl/openssl.git Repos/openssl", shell=True)
 try:
-    Repo.clone_from(f"git@github.com:openssl/openssl.git", "Repos/openssl")
+    Repo.clone_from(f"https://github.com/openssl/openssl.git", "Repos/openssl")
     call("bash src/buildssl.sh", shell=True)
 except:
     print("Something happend skipping...")
