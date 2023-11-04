@@ -7,21 +7,7 @@ class SourceApp:
     def __init__(self, repo):
         self.repo = repo
     def build(self, repo):
-        call(f"export PKGVER={self.response}", shell=True)
         call(f"bash BuildScripts/{repo}/build.sh", shell=True)
-    def checkver(self, repo):
-
-        f = open(f"BuildScripts/{repo}/version", "r").read()
-        self.response = f # TODO
-        if f != self.response:
-            call(f"rm BuildScripts/{repo}/version", shell=True)
-
-            o = open(f"BuildScripts/{repo}/version", "w")
-            o.write(self.response)
-            o.close()
-            self.build(repo)
-            if os.path.exists(f"Build/{repo}/package.sh"):
-                self.package(repo)
     
     def sync_repo(self, repo):
         try:
