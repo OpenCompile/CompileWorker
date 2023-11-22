@@ -21,6 +21,3 @@ class SourceApp:
             pass
         else:
             self.sync_repo(repo)
-
-    def package(self, repo):
-        call(f"bash BuildScripts/{repo}/package.sh {self.response}", shell=True)
