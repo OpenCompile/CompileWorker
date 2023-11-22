@@ -1,5 +1,7 @@
 {
     "arch":"x86-64",
+    "gcc":"x86_64-linux-gnu-gcc"
+    "g++":"x86_64-linux-gnu-g++",
     "scriptsrepo":"OpenCompile/BuildScripts",
     "finalrepo":"OpenCompile/TarRepo",
     "openssl":{
