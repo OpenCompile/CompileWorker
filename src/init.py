@@ -7,7 +7,7 @@ f = json.load(f)
 
 #call(f"git clone https://github.com/{sowner}/{srepo}.git", shell=True)
 try:
-    Repo.clone_from(f"https://github.com/{f[scriptrepo]}", srepo)
+    Repo.clone_from(f"https://github.com/{f['scriptrepo']}", "BuildScripts")
 except:
     print("Somthing happed skipping..")
 #call("git clone git@github.com:openssl/openssl.git Repos/openssl", shell=True)
