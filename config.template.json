@@ -1,5 +1,9 @@
 {
     "arch":"x86-64",
     "scriptsrepo":"OpenCompile/BuildScripts",
-    "finalrepo":"OpenCompile/TarRepo"
+    "finalrepo":"OpenCompile/TarRepo",
+    "openssl":{
+        "repo":"openssl/openssl",
+        "branch":"OpenSSL_1_1_0-stable"
+    }
 }

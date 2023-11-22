@@ -6,8 +6,10 @@ import platform
 from git import Repo
 import requests
 
+f = json.load(open("config.json"))
+
 def main():
-    arch = platform.machine()
+    arch = f["arch"]
 
     if os.path.exists("BuildScripts"):
         l = json.loads(open("BuildScripts/list.json", "r").read())
