@@ -2,12 +2,11 @@
     "arch":"x86-64",
     "gcc":"x86_64-linux-gnu-gcc",
     "g++":"x86_64-linux-gnu-g++",
+    "cores":1,
+    "isalpine":false,
     "scriptsrepo":"OpenCompile/BuildScripts",
     "finalrepo":"OpenCompile/TarRepo",
-    "openssl":{
-        "repo":"openssl/openssl",
-        "branch":"OpenSSL_1_1_0-stable"
-    },
+
     "plugins":{
         "ntfy":{
             "enabled":true,

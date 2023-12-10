@@ -13,14 +13,6 @@ def main():
 
     if os.path.exists("BuildScripts"):
         l = json.loads(open("BuildScripts/list.json", "r").read())
-        from scripts.xmrig import xmrig_push
-
-        # xmrig
-        xmrig = SourceApp(l["xmrig"])
-        xmrig.repo_exists(xmrig.repo)
-        xmrig.build(xmrig.repo)
-        
-        xmrig_push()
 
         call(f"rm -rf TarRepo/tmp", shell=True)
     else:
