@@ -6,12 +6,12 @@ import platform
 from git import Repo
 import requests
 
-f = json.load(open("config.json"))
+fi = json.load(open("config.json"))
 
 def main():
-    arch = f["arch"]
+    arch = fi["arch"]
 
-    MKFLAGS = f"CC={["gcc"]} CXX={["g++"]} CORES={["cores"]} ARCH={arch}"
+    MKFLAGS = f"CC={fi["gcc"]} CXX={fi["g++"]} CORES={fi["cores"]} ARCH={arch}"
 
     if os.path.exists("BuildScripts"):
         # Xmrig Compile
