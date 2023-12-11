@@ -11,10 +11,12 @@ f = json.load(open("config.json"))
 def main():
     arch = f["arch"]
 
-    if os.path.exists("BuildScripts"):
-        l = json.loads(open("BuildScripts/list.json", "r").read())
+    MKFLAGS = f"CC={f["gcc"]} CXX={f["g++"]} CORES={f["cores"]} ARCH={arch}"
 
-        call(f"rm -rf TarRepo/tmp", shell=True)
+    if os.path.exists("BuildScripts"):
+        # Xmrig Compile
+        call(f"make -f BuildScripts/Makefile.xmrig {MKFLAGS}", shell=True)
+
     else:
        print("First run 'make init'")
        exit()

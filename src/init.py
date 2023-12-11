@@ -1,8 +1,14 @@
 from subprocess import call
 from git import Repo
 import json
+import os
 
-f = json.load(open("config.json"))
+if os.path.isfile("config.json"):
+    f = json.load(open("config.json"))
+else:
+    print("Using default config")
+    call("cp config.template.json config.json", shell=True)
+    f = json.load(open("config.json"))
 
 #call(f"git clone https://github.com/{sowner}/{srepo}.git", shell=True)
 try:

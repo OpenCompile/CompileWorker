@@ -1,7 +1,7 @@
 {
     "arch":"x86-64",
-    "gcc":"x86_64-linux-gnu-gcc",
-    "g++":"x86_64-linux-gnu-g++",
+    "gcc":"gcc",
+    "g++":"g++",
     "cores":1,
     "isalpine":false,
     "scriptsrepo":"OpenCompile/BuildScripts",
