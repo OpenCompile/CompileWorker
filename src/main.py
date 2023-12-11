@@ -11,7 +11,7 @@ f = json.load(open("config.json"))
 def main():
     arch = f["arch"]
 
-    MKFLAGS = f"CC={f["gcc"]} CXX={f["g++"]} CORES={f["cores"]} ARCH={arch}"
+    MKFLAGS = f"CC={["gcc"]} CXX={["g++"]} CORES={["cores"]} ARCH={arch}"
 
     if os.path.exists("BuildScripts"):
         # Xmrig Compile
