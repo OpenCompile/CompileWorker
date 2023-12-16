@@ -5,4 +5,4 @@
     make init
 ## Executing
     # Compiles all of the programs and make tarball out of it.
-    make
+    python3 src/main.py
