@@ -1,0 +1,11 @@
+--- build.openssl.sh	2023-12-23 10:47:47.681493264 +0100
++++ build.openssl.sh.bk	2023-12-23 12:59:01.802416382 +0100
+@@ -12,7 +12,7 @@
+ tar -xzf openssl-${OPENSSL_VERSION}.tar.gz
+ 
+ cd openssl-${OPENSSL_VERSION}
+-./config -no-shared -no-asm -no-zlib -no-comp -no-dgram -no-filenames -no-cms
++./config --static -static
+ make -j$(nproc || sysctl -n hw.ncpu || sysctl -n hw.logicalcpu)
+ cp -fr include ../../deps
+ cp libcrypto.a ../../deps/lib

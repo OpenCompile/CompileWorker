@@ -1,32 +1,57 @@
 import os
 import json
 from subprocess import call
-from srcmanage import SourceApp
-import platform
 from git import Repo
 import requests
+import io
 
-def main():
-    arch = platform.machine()
+fi = json.load(open("config.json"))
 
-    if os.path.exists("BuildScripts"):
-        l = json.loads(open("BuildScripts/list.json", "r").read())
+if fi["ftp"]["enabled"]:
+    from ftplib import FTP
+    fftp = fi["ftp"]
+    ftp = FTP(fftp["host"], fftp["user"], fftp["password"], fftp["acct"])
 
-        # xmrig
-        xmrig = SourceApp(l["xmrig"])
-        xmrig.repo_exists(xmrig.repo)
-        xmrig.build(xmrig.repo)
-        response = requests.get(f"https://api.github.com/repos/xmrig/xmrig/releases/latest")
-        response = response.json()['tag_name']
-        call(f"mkdir -p TarRepo/xmrig/xmrig/{response}/",  shell=True)
-        call(f"cp Repos/xmrig/xmrig/build/xmrig TarRepo/xmrig/xmrig/{response}/xmrig-{arch} && pwd && cd TarRepo/xmrig/xmrig/{response} && sha256sum xmrig-{arch} > SHA256SUMS.txt && cd ../../../", shell=True)
+
+C = fi["gcc"]
+Cx = fi["g++"]
+cores = fi["cores"]
+
+
+def push_code(package, ver, file=False, name=False):
+    if file !=False and name !=False:
+        bio = io.BytesIO(open(file))
+        ftp.retrbinary(f'STOR {name}', bio)
+    else:
         repo = Repo("TarRepo")
         repo.index.add('**')
-        repo.index.commit(f"Updating xmrig to {response}")
-        repo.remotes.origin.push()
-        call(f"rm -rf TarRepo/tmp", shell=True)
+        repo.index.commit(f"Updating {package} to {ver}")
+        repo.git.push("origin", fi["finalbranch"])
+
+#Versions of github projects
+
+xmrig_ver = requests.get(f"https://api.github.com/repos/xmrig/xmrig/releases/latest").json()['tag_name']
+
+def main():
+
+    try:
+        Repo.clone_from("https://github.com/xmrig/xmrig.git", "Repos/xmrig/xmrig")
+    except:
+        Repo("Repos/xmrig/xmrig").remotes.origin.pull()
+    arch = fi["arch"]
+    MKFLAGS = f"CC={C} CXX={Cx} CORES={cores} ARCH={arch}"
+
+    if os.path.exists("BuildScripts"):
+        # Xmrig
+        call("patch Repos/xmrig/xmrig/scripts/build.openssl.sh < patches/xmrig.patch", shell=True)
+        call(f"make -f BuildScripts/Makefile.xmrig {MKFLAGS}", shell=True)
+        call(f"make -f BuildScripts/Makefile.xmrig package VERSION={xmrig_ver}", shell=True)
+        if fi["ftp"]["enabled"]:
+            push_code("xmrig", xmrig_ver, f"TarRepo/xmrig/xmrig/{xmrig_ver}", f"pub/xmrig/xmrig/{xmrig_ver}/xmrig")
+        else:
+            push_code("xmrig", xmrig_ver)
     else:
-       print("First run 'make init'")
+       print("First run 'python3 src/init.py'")
        exit()
 if __name__ == "__main__":
     main()

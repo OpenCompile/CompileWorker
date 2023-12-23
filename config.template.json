@@ -1,0 +1,26 @@
+{
+    "arch":"x86-64",
+    "gcc":"gcc",
+    "g++":"g++",
+    "cores":1,
+    "isalpine":false,
+    "scriptsrepo":"OpenCompile/BuildScripts",
+    "finalrepo":"OpenCompile/Repo",
+    "finalbranch":"test",
+
+    "ftp":{
+        "enabled":false,
+        "host":"example.com",
+        "user":"user",
+        "password":1234,
+        "acct":null
+    },
+
+    "plugins":{
+        "ntfy":{
+            "enabled":true,
+            "server":"https://ntfy.sh",
+            "topic":"test"
+        }
+    }
+}

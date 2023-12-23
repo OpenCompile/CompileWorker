@@ -1,22 +1,26 @@
 from subprocess import call
 from git import Repo
+import json
+import os
 
-sowner = "OpenCompile"
-srepo = "BuildScripts"
+if os.path.isfile("config.json"):
+    fi = json.load(open("config.json"))
+else:
+    print("Using default config")
+    call("cp config.template.json config.json", shell=True)
+    fi = json.load(open("config.json"))
+
+scriptrepo = fi["scriptsrepo"]
+
 #call(f"git clone https://github.com/{sowner}/{srepo}.git", shell=True)
 try:
-    Repo.clone_from(f"https://github.com/{sowner}/{srepo}", srepo)
+    Repo.clone_from(f"https://github.com/{scriptrepo}.git", "BuildScripts")
 except:
     print("Somthing happed skipping..")
-#call("git clone git@github.com:openssl/openssl.git Repos/openssl", shell=True)
-try:
-    Repo.clone_from(f"https://github.com/openssl/openssl.git", "Repos/openssl")
-    call("bash src/buildssl.sh", shell=True)
-except:
-    print("Something happend skipping...")
+
 #call("git clone git@github.com:OpenCompile/TarRepo.git", shell=True)
 try:
-    Repo.clone_from(f"git@github.com:OpenCompile/TarRepo.git", "TarRepo")
+    Repo.clone_from(f"https://github.com/{fi['finalrepo']}", "TarRepo")
 except:
     repo = Repo("TarRepo")
     o = repo.remotes.origin.pull()

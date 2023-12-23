@@ -1,11 +1,9 @@
 version: 1.0.{build}
 image: Ubuntu
-install:
+before_build:
 
-- sh: make install-deb
-- sh: pip3 install -r requirements.txt
+- sh: sudo apt update && sudo apt install gcc g++ python3 python3-pip git build-essential cmake
 - sh: python3 src/init.py
 
-#build_script:
-
-#- sh: python3 src/init.py
+build:
+- sh: make -f BuildScripts/Makefile.xmrig CFLAGS="-DXMRIG_DEPS=scripts/deps -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++"
