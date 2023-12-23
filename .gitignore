@@ -164,3 +164,6 @@ BuildScripts/
 Repos/
 TarRepo/
 config.json
+
+# Toolchains
+x86_64-linux-musl-cross

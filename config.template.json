@@ -5,7 +5,16 @@
     "cores":1,
     "isalpine":false,
     "scriptsrepo":"OpenCompile/BuildScripts",
-    "finalrepo":"OpenCompile/TarRepo",
+    "finalrepo":"OpenCompile/Repo",
+    "finalbranch":"test",
+
+    "ftp":{
+        "enabled":false,
+        "host":"example.com",
+        "user":"user",
+        "password":1234,
+        "acct":null
+    },
 
     "plugins":{
         "ntfy":{
