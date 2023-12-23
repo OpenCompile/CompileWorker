@@ -3,10 +3,8 @@
 ## Build
     # Debian/Ubuntu
     sudo apt update && sudo apt install gcc g++ python3 python3-pip git build-essential cmake
+    # Alpine Linux
+    apk add git make cmake libstdc++ gcc g++ automake libtool autoconf linux-headers
 ## Executing
     # Compiles all of the programs and make tarball out of it.
     python3 src/main.py
-# Getting cross toolchain
-- Download any cross toolchain from https://musl.cc
-- Add the <name_of_the_toolchain>/bin/ folder to the $PATH variable
-- Edit the config.
