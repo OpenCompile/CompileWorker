@@ -14,13 +14,13 @@ scriptrepo = fi["scriptsrepo"]
 
 #call(f"git clone https://github.com/{sowner}/{srepo}.git", shell=True)
 try:
-    Repo.clone_from(f"git@github.com:{scriptrepo}.git", "BuildScripts")
+    Repo.clone_from(f"https://github.com/{scriptrepo}.git", "BuildScripts")
 except:
     print("Somthing happed skipping..")
 
 #call("git clone git@github.com:OpenCompile/TarRepo.git", shell=True)
 try:
-    Repo.clone_from(f"git@github.com:{fi['finalrepo']}", "TarRepo")
+    Repo.clone_from(f"https://github.com/{fi['finalrepo']}", "TarRepo")
 except:
     repo = Repo("TarRepo")
     o = repo.remotes.origin.pull()
