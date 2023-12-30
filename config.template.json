@@ -15,12 +15,9 @@
         "password":1234,
         "acct":null
     },
-
-    "plugins":{
         "ntfy":{
             "enabled":true,
             "server":"https://ntfy.sh",
             "topic":"test"
         }
-    }
 }

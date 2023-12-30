@@ -25,3 +25,13 @@ except:
     repo = Repo("TarRepo")
     o = repo.remotes.origin.pull()
     print("Repo already exists pulling changes...")
+
+try:
+    Repo.clone_from("https://github.com/xmrig/xmrig.git", "Repos/xmrig/xmrig")
+except:
+    Repo("Repos/xmrig/xmrig").remotes.origin.pull()
+
+try:
+    Repo.clone_from("https://github.com/mirror/busybox.git", "Repos/busybox")
+except:
+    Repo("Repos/busybox").remotes.origin.pull()
