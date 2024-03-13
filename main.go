@@ -1,22 +1,14 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
+	"io"
+	"log"
+	"net/http"
+	"os/exec"
 
-	"github.com/google/go-github/github"
+	"github.com/tidwall/gjson"
 )
 
-type Package struct {
-	FullName      string
-	Description   string
-	StarsCount    int
-	ForksCount    int
-	LastUpdatedBy string
-}
-
-/*
 func patch_file(patch string, file string) {
 	cmd := exec.Command("patch", file, "<", patch)
 
@@ -26,30 +18,28 @@ func patch_file(patch string, file string) {
 		log.Fatal(err)
 	}
 }
-*/
 
-/*
 func get_version(repo string) string {
+	url := "https://api.github.com/repos/" + repo + "/releases/latest"
 
-}
-*/
-
-func main() {
-	context := context.Background()
-	client := github.NewClient(nil)
-
-	repo, _, err := client.Repositories.Get(context, "OpenCompile", "CompileWorker")
+	resp, err := http.Get(url)
 
 	if err != nil {
-		fmt.Printf("Problem in getting repository information %v\n", err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
 
-	pack := &Package{
-		FullName:   *repo.FullName,
-		ForksCount: *repo.ForksCount,
-		StarsCount: *repo.StargazersCount,
-	}
+	defer resp.Body.Close()
 
-	fmt.Printf("%+v\n", pack)
+	body, err := io.ReadAll(resp.Body)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	value := gjson.Get(string(body), "tag_name")
+
+	return value.String()
+}
+
+func main() {
+	println(get_version("xmrig/xmrig"))
 }
