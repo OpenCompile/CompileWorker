@@ -4,20 +4,11 @@ import (
 	"io"
 	"log"
 	"net/http"
-	"os/exec"
+	"os"
+    "os/exec"
 
 	"github.com/tidwall/gjson"
 )
-
-func patch_file(patch string, file string) {
-	cmd := exec.Command("patch", file, "<", patch)
-
-	err := cmd.Run()
-
-	if err != nil {
-		log.Fatal(err)
-	}
-}
 
 func get_version(repo string) string {
 	url := "https://api.github.com/repos/" + repo + "/releases/latest"
@@ -40,6 +31,71 @@ func get_version(repo string) string {
 	return value.String()
 }
 
+func execute(shell string) {
+    cmd := exec.Command(shell)
+
+    output, err := cmd.Output()
+
+    if err != nil {
+        log.Fatal(err)
+    }
+
+    println(string(output))
+}
+
+func build(manifest string) {
+	content, err := os.ReadFile(manifest)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+    println("[INFO] Building", gjson.Get(string(content), "name").String()) // Extract package name from manifest
+
+    var script gjson.Result
+
+    // SETUP
+	script = gjson.Get(string(content), "scripts.setup")
+    if !script.Exists() {
+        println("[WARNING] setup script not found in the manifest, skipping.")
+    } else {
+        println("[INFO] Running setup script")
+        execute(script.String())
+    }
+
+    // BUILD
+    script = gjson.Get(string(content), "scripts.build")
+    if !script.Exists() {
+        println("[WARNING] build script not found in the manifest, skipping.")
+    } else {
+        println("[INFO] Running build script")
+        execute(script.String())
+    }
+
+    // TEST
+    script = gjson.Get(string(content), "scripts.test")
+    if !script.Exists() {
+        println("[WARNING] test script not found in the manifest, skipping.")
+    } else {
+        println("[INFO] Running test script")
+        execute(script.String())
+    }
+
+    // PACKAGE
+    script = gjson.Get(string(content), "scripts.package")
+    if !script.Exists() {
+        println("[WARNING] package script not found in the manifest, skipping.")
+    } else {
+        println("[INFO] Running package script")
+        execute(script.String())
+    }
+}
+
 func main() {
-	println(get_version("xmrig/xmrig"))
+
+    if (len(os.Args) < 2) {
+        println("[ERROR] Specify manifest name");
+        os.Exit(1)
+    }
+
+	build(os.Args[1])
 }

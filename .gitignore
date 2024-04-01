@@ -23,3 +23,7 @@ go.work
 main
 
 Repos/
+
+manifests/
+
+compilerworker
