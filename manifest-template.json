@@ -1,11 +1,3 @@
-# CompileWorker
-Automatic build node for mirrors.
-
-
-Usage: `go run main.go manifest.json`
-
-Example Manifest:
-```json
 {
     "name":"xmrig"
     "checkversion":true
@@ -21,4 +13,3 @@ Example Manifest:
         "package":"./xmrig/package.sh"
     }
 }
-```
