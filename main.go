@@ -52,41 +52,49 @@ func build(manifest string) {
     println("[INFO] Building", gjson.Get(string(content), "name").String()) // Extract package name from manifest
 
     var script gjson.Result
+    var system string = gjson.Get(string(content), "system").String()
 
-    // SETUP
-	script = gjson.Get(string(content), "scripts.setup")
-    if !script.Exists() {
-        println("[WARNING] setup script not found in the manifest, skipping.")
-    } else {
-        println("[INFO] Running setup script")
-        execute(script.String())
-    }
+    if system == "none" {
+        // SETUP
+	    script = gjson.Get(string(content), "scripts.setup")
+        if !script.Exists() {
+            println("[WARNING] setup script not found in the manifest, skipping.")
+        } else {
+            println("[INFO] Running setup script")
+            execute(script.String())
+        }
 
-    // BUILD
-    script = gjson.Get(string(content), "scripts.build")
-    if !script.Exists() {
-        println("[WARNING] build script not found in the manifest, skipping.")
-    } else {
-        println("[INFO] Running build script")
-        execute(script.String())
-    }
+        // BUILD
+        script = gjson.Get(string(content), "scripts.build")
+        if !script.Exists() {
+            println("[WARNING] build script not found in the manifest, skipping.")
+        } else {
+            println("[INFO] Running build script")
+            execute(script.String())
+        }
 
-    // TEST
-    script = gjson.Get(string(content), "scripts.test")
-    if !script.Exists() {
-        println("[WARNING] test script not found in the manifest, skipping.")
-    } else {
-        println("[INFO] Running test script")
-        execute(script.String())
-    }
+        // TEST
+        script = gjson.Get(string(content), "scripts.test")
+        if !script.Exists() {
+            println("[WARNING] test script not found in the manifest, skipping.")
+        } else {
+            println("[INFO] Running test script")
+            execute(script.String())
+        }
 
-    // PACKAGE
-    script = gjson.Get(string(content), "scripts.package")
-    if !script.Exists() {
-        println("[WARNING] package script not found in the manifest, skipping.")
+        // PACKAGE
+        script = gjson.Get(string(content), "scripts.package")
+        if !script.Exists() {
+            println("[WARNING] package script not found in the manifest, skipping.")
+        } else {
+            println("[INFO] Running package script")
+            execute(script.String())
+        }
+    } else if system == "alpine" {
+        println("[INFO] Building alpine manifest")
+        execute("abuild")
     } else {
-        println("[INFO] Running package script")
-        execute(script.String())
+        println("[ERROR] Unsupported manifest system")
     }
 }
 
