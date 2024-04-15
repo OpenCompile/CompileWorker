@@ -1,15 +1,16 @@
 {
-    "name":"xmrig"
-    "checkversion":true
+    "name":"xmrig",
+    "checkversion":true,
+    "system":"none",
 
     "versionapi": {
-        "api":"github"
+        "api":"github",
         "apiversion":"https://api.github.com/repos/xmrig/xmrig/releases/latest"
-    }
+    },
     "scripts":{
-        "setup":"./xmrig/setup.sh"
-        "build":"./xmrig/build.sh"
-        "test":"./xmrig/test.sh"
+        "setup":"./xmrig/setup.sh",
+        "build":"./xmrig/build.sh",
+        "test":"./xmrig/test.sh",
         "package":"./xmrig/package.sh"
     }
 }
