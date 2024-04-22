@@ -30,6 +30,7 @@ func get_version(repo string) string {
 	value := gjson.Get(string(body), "tag_name")
 
 	if strings.HasPrefix(value.String(), "v") {
+        println("[INFO] Package version: " + value.String()[1:])
         return value.String()[1:]
     }
     return value.String()
@@ -112,6 +113,8 @@ func build(manifest string) {
         version := get_version(gjson.Get(string(content), "repo").String())
         println("[INFO] Building alpine manifest")
         execute_multi("./bump.sh", "APKBUILD", version)
+        execute_multi("abuild", "checksum")
+        execute_multi("abuild", "sign")
         execute_multi("abuild", "-r")
     } else {
         println("[ERROR] Unsupported manifest system")
