@@ -2,12 +2,13 @@ package main
 
 import (
 	"io"
-	"log"
-	"net/http"
+    "log"
+    "net/http"
 	"os"
-    	"os/exec"
+    "os/exec"
+    "strings"
 
-	"github.com/tidwall/gjson"
+    "github.com/tidwall/gjson"
 )
 
 func get_version(repo string) string {
@@ -28,7 +29,10 @@ func get_version(repo string) string {
 	}
 	value := gjson.Get(string(body), "tag_name")
 
-	return value.String()
+	if strings.HasPrefix(value.String(), "v") {
+        return value.String()[1:]
+    }
+    return value.String()
 }
 
 func execute(shell string) {
@@ -37,6 +41,20 @@ func execute(shell string) {
     output, err := cmd.Output()
 
     if err != nil {
+        println(string(output))
+        log.Fatal(err)
+    }
+
+    println(string(output))
+}
+
+func execute_multi(name string, args ...string) {
+    cmd := exec.Command(name, args...)
+
+    output, err := cmd.Output()
+
+    if err != nil {
+        println(string(output))
         log.Fatal(err)
     }
 
@@ -91,8 +109,10 @@ func build(manifest string) {
             execute(script.String())
         }
     } else if system == "alpine" {
+        version := get_version(gjson.Get(string(content), "repo").String())
         println("[INFO] Building alpine manifest")
-        execute("abuild")
+        execute_multi("./bump.sh", "APKBUILD", version)
+        execute_multi("abuild", "-r")
     } else {
         println("[ERROR] Unsupported manifest system")
     }

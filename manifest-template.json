@@ -3,6 +3,8 @@
     "checkversion":true,
     "system":"none",
 
+    "repo":"xmrig/xmrig",
+
     "versionapi": {
         "api":"github",
         "apiversion":"https://api.github.com/repos/xmrig/xmrig/releases/latest"
