@@ -114,7 +114,6 @@ func build(manifest string) {
         println("[INFO] Building alpine manifest")
         execute_multi("./bump.sh", "APKBUILD", version)
         execute_multi("abuild", "checksum")
-        execute_multi("abuild", "sign")
         execute_multi("abuild", "-r")
     } else {
         println("[ERROR] Unsupported manifest system")
