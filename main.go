@@ -7,9 +7,17 @@ import (
 	"os"
     "os/exec"
     "strings"
+    "bufio"
 
     "github.com/tidwall/gjson"
 )
+
+func loop(repo string, version string, manifest []byte, input bool) {
+    println("[INFO] Checking version of " + repo)
+    if strings.Compare(get_version(repo), version) == 1 || input {
+        build(manifest)
+    }
+}
 
 func get_version(repo string) string {
 	url := "https://api.github.com/repos/" + repo + "/releases/latest"
@@ -30,7 +38,6 @@ func get_version(repo string) string {
 	value := gjson.Get(string(body), "tag_name")
 
 	if strings.HasPrefix(value.String(), "v") {
-        println("[INFO] Package version: " + value.String()[1:])
         return value.String()[1:]
     }
     return value.String()
@@ -62,11 +69,7 @@ func execute_multi(name string, args ...string) {
     println(string(output))
 }
 
-func build(manifest string) {
-	content, err := os.ReadFile(manifest)
-	if err != nil {
-		log.Fatal(err)
-	}
+func build(content []byte) {
 
     println("[INFO] Building", gjson.Get(string(content), "name").String()) // Extract package name from manifest
 
@@ -126,6 +129,35 @@ func main() {
         println("[ERROR] Specify manifest name");
         os.Exit(1)
     }
+    
+    reader := bufio.NewReader(os.Stdin)
+    var input bool
 
-	build(os.Args[1])
+	content, err := os.ReadFile(os.Args[1])
+
+    var version string = gjson.Get(string(content), "repo").String()
+
+    if err != nil {
+		log.Fatal(err)
+	}
+
+    if gjson.Get(string(content), "checkversion").Bool() {
+        print("Do you want to build version " + version + " Y/n ")
+        char, _, err := reader.ReadRune()
+        if err != err {
+            println(err)
+        }
+
+        if char == 'y' || char == 'Y' {
+            input = true
+        } else {
+            input = false
+        }
+
+	    for {
+            loop(gjson.Get(string(content), "repo").String(), version, content, input)
+        }
+    } else {
+        build(content)
+    }
 }
